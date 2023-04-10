@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo/widgets/example/example_widget.dart';
+import 'package:flutter_todo/widgets/groups/groups_widget.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -8,10 +8,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'ToDO',
+      routes: {
+        '/groups': (context) => const GroupsWidget(),
+      },
+      initialRoute: '/groups',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const ExampleWidget(),
     );
   }
 }
