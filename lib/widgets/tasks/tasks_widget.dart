@@ -23,6 +23,29 @@ class _TasksWidgetState extends State<TasksWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return TasksWidgetModelProvider(
+      model: _model!,
+      child: const TasksWidgetBody(),
+    );
+  }
+}
+
+class TasksWidgetBody extends StatelessWidget {
+  const TasksWidgetBody({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final model = TasksWidgetModelProvider.watch(context)?.model;
+    final title = model?.group?.name ?? 'Tasks';
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(title),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: const Icon(Icons.add),
+      ),
+    );
   }
 }
