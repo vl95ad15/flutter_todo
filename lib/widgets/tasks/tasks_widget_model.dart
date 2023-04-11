@@ -12,6 +12,10 @@ class TasksWidgetModel extends ChangeNotifier {
     _setup();
   }
 
+  void showForm(BuildContext context) {
+    Navigator.of(context).pushNamed('/groups/tasks/form');
+  }
+
   void _loadGroup() async {
     final box = await _groupBox;
     _group = box.get(groupKey);

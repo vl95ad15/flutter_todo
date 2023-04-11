@@ -1,3 +1,4 @@
+import 'package:flutter_todo/domain/entity/task.dart';
 import 'package:hive/hive.dart';
 
 part 'group.g.dart';
@@ -8,9 +9,14 @@ class Group {
   String name;
 
   @HiveField(1)
-  HiveList? tasks;
+  HiveList<Task>? tasks;
 
   Group({
     required this.name,
   });
+
+  void addTask(Box<Task> box, Task task) {
+    tasks ??= HiveList(box);
+    tasks?.add(task);
+  }
 }
