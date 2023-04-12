@@ -45,6 +45,14 @@ class TasksWidgetModel extends ChangeNotifier {
     await _group?.save();
   }
 
+  void toggleDone(int groupIndex) async {
+    final task = group?.tasks?[groupIndex];
+    final currentState = task?.isDone ?? false;
+    task?.isDone = !currentState;
+    await task?.save();
+    notifyListeners();
+  }
+
   void _setup() {
     if (!Hive.isAdapterRegistered(1)) {
       Hive.registerAdapter(GroupAdapter());
