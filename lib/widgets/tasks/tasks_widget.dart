@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_todo/widgets/tasks/tasks_widget_model.dart';
 
 class TasksWidget extends StatefulWidget {
@@ -42,9 +43,65 @@ class TasksWidgetBody extends StatelessWidget {
       appBar: AppBar(
         title: Text(title),
       ),
+      body: const _TaskListWidget(),
       floatingActionButton: FloatingActionButton(
         onPressed: () => model?.showForm(context),
         child: const Icon(Icons.add),
+      ),
+    );
+  }
+}
+
+class _TaskListWidget extends StatelessWidget {
+  const _TaskListWidget();
+
+  @override
+  Widget build(BuildContext context) {
+    final groupsCount =
+        TasksWidgetModelProvider.watch(context)?.model.tasks.length ?? 0;
+    return ListView.separated(
+      itemBuilder: (BuildContext context, int index) {
+        return _TaskListRowWidget(indexInList: index);
+      },
+      separatorBuilder: (BuildContext context, int index) {
+        return const Divider(height: 1);
+      },
+      itemCount: groupsCount,
+    );
+  }
+}
+
+class _TaskListRowWidget extends StatelessWidget {
+  final int indexInList;
+  const _TaskListRowWidget({
+    required this.indexInList,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final model = TasksWidgetModelProvider.read(context)!.model;
+    final task = model.tasks[indexInList];
+    return Slidable(
+      key: const ValueKey(0),
+      endActionPane: ActionPane(
+        motion: const BehindMotion(),
+        children: [
+          SlidableAction(
+            onPressed: (context) => model.deleteTask(indexInList),
+            backgroundColor: const Color(0xFFFE4A49),
+            foregroundColor: Colors.white,
+            icon: Icons.delete,
+            label: 'Delete',
+          ),
+        ],
+      ),
+      child: ColoredBox(
+        color: Colors.white,
+        child: ListTile(
+          title: Text(task.text),
+          trailing: const Icon(Icons.chevron_right),
+          onTap: () {},
+        ),
       ),
     );
   }
