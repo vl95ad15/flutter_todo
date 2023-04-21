@@ -11,6 +11,7 @@ class MyApp extends StatelessWidget {
       title: 'ToDO',
       routes: mainNavigation.routes,
       initialRoute: mainNavigation.initialRoute,
+      onGenerateRoute: mainNavigation.onGenerateRoute,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),

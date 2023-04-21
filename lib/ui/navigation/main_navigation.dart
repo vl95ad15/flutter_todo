@@ -16,7 +16,25 @@ class MainNavigation {
   final routes = <String, Widget Function(BuildContext)>{
     MainNavigationRouteNames.groups: (context) => const GroupsWidget(),
     MainNavigationRouteNames.groupsForm: (context) => const GroupFormWidget(),
-    MainNavigationRouteNames.tasks: (context) => const TasksWidget(),
-    MainNavigationRouteNames.tasksForm: (context) => const TaskFormWidget(),
   };
+
+  Route<Object>? onGenerateRoute(RouteSettings settings) {
+    switch (settings.name) {
+      case MainNavigationRouteNames.tasks:
+        final groupKey = settings.arguments as int;
+        return MaterialPageRoute(
+          builder: (context) => TasksWidget(groupKey: groupKey),
+        );
+      case MainNavigationRouteNames.tasksForm:
+        final groupKey = settings.arguments as int;
+        return MaterialPageRoute(
+          builder: (context) => TaskFormWidget(groupKey: groupKey),
+        );
+      default:
+        const widget = Text('Navigation Error');
+        return MaterialPageRoute(
+          builder: (context) => widget,
+        );
+    }
+  }
 }
