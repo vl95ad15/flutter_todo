@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo/widgets/group_form/group_form_widget.dart';
-import 'package:flutter_todo/widgets/groups/groups_widget.dart';
-import 'package:flutter_todo/widgets/task_form/task_form_widget.dart';
-import 'package:flutter_todo/widgets/tasks/tasks_widget.dart';
+import 'package:flutter_todo/ui/widgets/group_form/group_form_widget.dart';
+import 'package:flutter_todo/ui/widgets/groups/groups_widget.dart';
+import 'package:flutter_todo/ui/widgets/task_form/task_form_widget.dart';
+import 'package:flutter_todo/ui/widgets/tasks/tasks_widget.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
