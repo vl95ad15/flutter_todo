@@ -6,7 +6,7 @@ import 'package:flutter_todo/ui/widgets/tasks/tasks_widget.dart';
 
 abstract class MainNavigationRouteNames {
   static const groups = '/';
-  static const groupsForm = '/groupsForm';
+  static const groupsForm = '/groupForm';
   static const tasks = '/tasks';
   static const tasksForm = '/tasks/form';
 }
@@ -18,12 +18,12 @@ class MainNavigation {
     MainNavigationRouteNames.groupsForm: (context) => const GroupFormWidget(),
   };
 
-  Route<Object>? onGenerateRoute(RouteSettings settings) {
+  Route<Object> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case MainNavigationRouteNames.tasks:
-        final config = settings.arguments as TasksWidgetConfig;
+        final groupKey = settings.arguments as int;
         return MaterialPageRoute(
-          builder: (context) => TasksWidget(config: config,),
+          builder: (context) => TasksWidget(groupKey: groupKey),
         );
       case MainNavigationRouteNames.tasksForm:
         final groupKey = settings.arguments as int;

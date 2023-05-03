@@ -1,29 +1,31 @@
 import 'dart:async';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_todo/domain/data_provider/box_manager.dart';
+import 'package:flutter_todo/domain/entity/group.dart';
+import 'package:flutter_todo/library/hive/box_manager.dart';
 import 'package:flutter_todo/domain/entity/task.dart';
 import 'package:flutter_todo/ui/navigation/main_navigation.dart';
-import 'package:flutter_todo/ui/widgets/tasks/tasks_widget.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class TasksWidgetModel extends ChangeNotifier {
-  TasksWidgetConfig config;
+  int groupKey;
   late final Future<Box<Task>> _box;
   ValueListenable<Object>? _listenableBox;
   var _tasks = <Task>[];
 
   List<Task> get tasks => _tasks.toList();
 
-  TasksWidgetModel({required this.config}) {
+  Group? _group;
+  Group? get group => _group;
+
+  TasksWidgetModel({required this.groupKey}) {
     _setup();
   }
 
   void showForm(BuildContext context) {
     Navigator.of(context).pushNamed(
       MainNavigationRouteNames.tasksForm,
-      arguments: config.groupKey,
+      arguments: groupKey,
     );
   }
 
@@ -32,7 +34,8 @@ class TasksWidgetModel extends ChangeNotifier {
   }
 
   Future<void> toggleDone(int taskIndex) async {
-    final task = (await _box).getAt(taskIndex);
+    final box = await _box;
+    final task = box.getAt(taskIndex);
     task?.isDone = !task.isDone;
     await task?.save();
   }
@@ -43,7 +46,7 @@ class TasksWidgetModel extends ChangeNotifier {
   }
 
   Future<void> _setup() async {
-    _box = BoxManager.instance.openTaskBox(config.groupKey);
+    _box = BoxManager.instance.openTaskBox(groupKey);
     await _readTasksFromHive();
     _listenableBox = (await _box).listenable();
     _listenableBox?.addListener(_readTasksFromHive);
@@ -53,6 +56,7 @@ class TasksWidgetModel extends ChangeNotifier {
   void dispose() async {
     _listenableBox?.removeListener(_readTasksFromHive);
     await BoxManager.instance.closeBox((await _box));
+
     super.dispose();
   }
 }

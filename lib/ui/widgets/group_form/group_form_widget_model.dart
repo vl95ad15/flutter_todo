@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo/domain/data_provider/box_manager.dart';
+import 'package:flutter_todo/library/hive/box_manager.dart';
 import 'package:flutter_todo/domain/entity/group.dart';
 
 class GroupFormWidgetModel {
@@ -7,8 +7,8 @@ class GroupFormWidgetModel {
 
   void saveGroup(BuildContext context) async {
     if (groupName.isEmpty) return;
-    final box = await BoxManager.instance.openGroupBox();
     final group = Group(name: groupName);
+    final box = await BoxManager.instance.openGroupBox();
     await box.add(group);
     await BoxManager.instance.closeBox(box);
     Navigator.of(context).pop();

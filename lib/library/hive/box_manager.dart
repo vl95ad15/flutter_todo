@@ -5,11 +5,9 @@ import 'package:hive/hive.dart';
 class BoxManager {
   static final BoxManager instance = BoxManager._();
   final Map<String, int> _boxCounter = <String, int>{};
-
   BoxManager._();
-
   Future<Box<Group>> openGroupBox() async {
-    return _openBox('groups_box', 1, GroupAdapter());
+    return _openBox('group_box', 1, GroupAdapter());
   }
 
   Future<Box<Task>> openTaskBox(int groupKey) async {
@@ -21,10 +19,8 @@ class BoxManager {
       _boxCounter.remove(box.name);
       return;
     }
-
-    var count = _boxCounter[box.name] ?? 1;
-    count -= 1;
-    _boxCounter[box.name] = count;
+    final count = _boxCounter[box.name] ?? 1;
+    _boxCounter[box.name] = count - 1;
     if (count > 0) return;
 
     _boxCounter.remove(box.name);
