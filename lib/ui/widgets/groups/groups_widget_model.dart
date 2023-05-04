@@ -4,7 +4,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/library/hive/box_manager.dart';
 import 'package:flutter_todo/ui/navigation/main_navigation.dart';
-import 'package:flutter_todo/ui/widgets/tasks/tasks_widget.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter_todo/domain/entity/group.dart';
 
