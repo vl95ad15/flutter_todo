@@ -49,12 +49,13 @@ class _GroupNameWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final model = GroupFormWidgetModelProvider.read(context)?.model;
+    final model = GroupFormWidgetModelProvider.watch(context)?.model;
     return TextField(
       autofocus: true,
-      decoration: const InputDecoration(
-        border: OutlineInputBorder(),
-        hintText: 'Enter group name',
+      decoration: InputDecoration(
+        border: const OutlineInputBorder(),
+        hintText: 'Group name',
+        errorText: model?.errorText,
       ),
       onChanged: (value) => model?.groupName = value,
       onEditingComplete: () => model?.saveGroup(context),
